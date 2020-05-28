@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block body_header_additional %}
+{% endblock body_header_additional %}
+
+{% block body_content %}
+<div class="container-auto">
+    <div class="row">
+        <div id="singleClickBtn" class="col justify-content-center text-center">
+            Single-Click
+        </div>
+        <div id="doubleClickBtn" class="col justify-content-center text-center">
+            Double-Click
+        </div>
+    </div>
+    <br/><br/>
+    <div class="row">
+            <input id="sendKeysField" type="text" value="" class="form-control" placeholder="Send keys...">
+            <button id="sendKeysBtn" class="btn btn-success">Send</button>
+    </div>
+</div>
+<div id="canvas" class="container-auto">
+    <div class="row">
+        <div class="col justify-content-center text-center">
+            <div id="cordsText" style="font-size: 280%;">
+                X coords: 0, Y coords: 0
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body_content %}
+
+
+{% block body_footer_additional %}
+{% endblock body_footer_additional %}
+
+{% block body_scripts_additional %}
+    <script src="{{url_for('static', filename='js/ajax.js')}}"></script>
+    <script src="{{url_for('static', filename='js/events.js')}}"></script>
+    <script src="{{url_for('static', filename='js/draging.js')}}"></script>
+{% endblock body_scripts_additional %}
