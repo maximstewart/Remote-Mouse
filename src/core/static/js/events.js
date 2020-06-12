@@ -1,3 +1,9 @@
+const socket = io();
+socket.on('connect', function() {
+    console.log("Websocket connected...");
+});
+
+
 // When true, moving the mouse updates coords
 const canvas   = document.getElementById("canvas");
 let isDragging = false;
@@ -20,21 +26,6 @@ canvas.addEventListener('touchmove',  e => { onMoveing(e); });
 canvas.addEventListener('mousemove',  e => { onMoveing(e); });
 canvas.addEventListener('touchend',   e => { onRelease(e); });
 canvas.addEventListener('mouseup',    e => { onRelease(e); });
-
-
-// Run update when true every 100 ms
-setInterval(function () {
-    if (runUpdate) {
-        doAjax("/update-coords", "x=" + px + "&y=" + py, "move");
-    }
-}, 100);
-
-// Update mod
-setInterval(function () {
-    if (runUpdate) {
-        mod += 1;
-    }
-}, 250);
 
 
 const onPress = (e) => {
@@ -87,7 +78,7 @@ const onMoveing = (e) => {
             py = 0;
         }
 
-        updateText(px, py);
+        socket.emit('update_coords', x2 + "," + y2);
     }
 }
 
@@ -95,8 +86,7 @@ const onMoveing = (e) => {
 const onRelease = (e) => {
     if (isDragging === true) {
         isDragging = false;
-        runUpdate  = false;
-        mod        = 3;
+        mod        = 2
         xLast      = 0;
         yLast      = 0;
         px         = 0;

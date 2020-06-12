@@ -12,10 +12,10 @@ Remote Mouse is a flask + pyautogui app to control a PC from your phone or any o
 ``` python3 -m venv venv/ ```
 
 Linux/Mac
-``` source bin/activate ```
+``` source venv/bin/activate ```
 
 Windows
-``` source bin/Scripts/activate ```
+``` source venv/bin/Scripts/activate ```
 
 Linux/Mac
 ``` pip install -r linux-requirements.txt ```
@@ -37,5 +37,5 @@ Windows
 ![1 Interface.... ](images/pic1.png)
 
 # TODO
-* Improve mouse translation and speed stepping...
-* Cleanup code/logic.
+* Fix typing input
+* Fix clicking lockup issues during touch

@@ -3,9 +3,15 @@ import secrets
 
 
 # Lib imports
+import eventlet
+
+from engineio.payload import Payload
+
+
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import current_user, login_user, logout_user, LoginManager
+from flask_socketio import SocketIO
 
 
 # Apoplication imports
@@ -13,19 +19,12 @@ from flask_login import current_user, login_user, logout_user, LoginManager
 
 # Configs and 'init'
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///static/db/database.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['TITLE'] = 'RemoteMouse'
+app.config['SECRET_KEY'] = secrets.token_hex(32)   # For csrf and some other stuff...
 
-# For csrf and some other stuff...
-app.config['SECRET_KEY'] = secrets.token_hex(32)
+# For Websockets
+# eventlet.monkey_patch()
+Payload.max_decode_packets = 120   # Fix too many small packets causing error
+socketio = SocketIO(app, async_mode='eventlet')
 
-
-login_manager = LoginManager(app)
-bcrypt        = Bcrypt(app)
-
-from core.models import db, User
-db.init_app(app)
-
-from core.forms import RegisterForm, LoginForm
 from core import routes

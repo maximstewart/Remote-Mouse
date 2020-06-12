@@ -4,15 +4,21 @@
 import pyautogui
 from flask import request, render_template
 
+
 # App imports
-from core import app, db                         # Get from __init__
+from core import app, socketio                   # Get from __init__
 from core.MessageHandler import MessageHandler   # Get simple message processor
+
+
 
 
 msgHandler = MessageHandler()
 TITLE      = app.config['TITLE']
-pyautogui.FAILSAFE = False  # If we hit corner, that's ok
-pyautogui.MINIMUM_DURATION = 0.5
+
+pyautogui.FAILSAFE = False                       # If we hit corner, that's ok
+# Let piautogui make updates as quick as it can...
+pyautogui.MINIMUM_DURATION = 0
+pyautogui.PAUSE = 0
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -42,24 +48,15 @@ def getCoords():
     return '{"x": "'+ str(x) +'", "y":"' + str(y) + '"}'
 
 
-@app.route('/update-coords', methods=['GET', 'POST'])
-def updateCoords():
-    if request.method == 'POST':
-        try:
-            x = float( str(request.values['x']).strip() )
-            y = float( str(request.values['y']).strip() )
-            # print("\nX: {}  Y: {}".format(str(x), str(y)))
-            pyautogui.moveRel(x, y);
-        except Exception as e:
-            print( repr(e) )
-            return render_template('error.html',
-                                    title='Error!',
-                                    message='X or Y is not an integer...')
-
-    return render_template('error.html',
-                            title='Error!',
-                            message='Must use POST request type...')
-
+@socketio.on('update_coords')
+def updateCoords(message):
+    try:
+        parts = message.split(",")
+        x = float( parts[0] )
+        y = float( parts[1] )
+        pyautogui.moveRel(x, y);
+    except Exception as e:
+        print( repr(e) )
 
 @app.route('/send-key', methods=['GET', 'POST'])
 def sendKey():
