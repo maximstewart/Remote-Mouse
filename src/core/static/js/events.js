@@ -125,7 +125,7 @@ function scrollToggle() {
 }
 
 
-function scrollToggle() {
+function holdToggle() {
     if (isHoldingMouse) {
         isHoldingMouse = false;
         mouseHoldToggle.classList.add("btn-success");
@@ -159,4 +159,4 @@ document.getElementById("leftClickBtn").addEventListener("mouseup", leftClick, t
 document.getElementById("rightClickBtn").addEventListener("mouseup", rightClick, true);
 
 document.getElementById("scrollToggle").addEventListener("mouseup", scrollToggle, true);
-document.getElementById("mouseHoldToggle").addEventListener("mouseup", mouseHoldToggle, true);
+document.getElementById("mouseHoldToggle").addEventListener("mouseup", holdToggle, true);
