@@ -43,6 +43,12 @@ input {
     z-index: -999;
 }
 
+#canvas {
+    position: relative;
+    width: 98%;
+    min-height: 800px;
+}
+
 #singleClickBtn, #doubleClickBtn {
     background-color: #62c462;
     border-style: dashed;

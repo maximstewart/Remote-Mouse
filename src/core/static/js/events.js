@@ -1,6 +1,8 @@
 const socket = io();
+let intervalTimer = null;
 let px       = 0;
 let py       = 0;
+let mod      = 1;
 
 
 socket.on('connect', function() {
@@ -13,28 +15,28 @@ $(function () {
     $("#canvas").on("mousedirection", function (e) {
         if (e.direction == "up") {
             px = 0;
-            py = -1;
+            py = -1 - mod;
         } else if (e.direction == "down") {
             px = 0;
-            py = 1;
+            py = 1 + mod;
         } else if (e.direction == "left") {
-            px = -1;
+            px = -1 - mod;
             py = 0;
         } else if (e.direction == "right") {
-            px = 1;
+            px = 1 + mod;
             py = 0;
         } else if (e.direction == "top-left") {
-            px = -1;
-            py = -1;
+            px = -1 - mod;
+            py = -1 - mod;
         } else if (e.direction == "top-right") {
-            px = 1;
-            py = -1;
+            px = 1 + mod;
+            py = -1 - mod;
         } else if (e.direction == "bottom-left") {
-            px = -1;
-            py = 1;
+            px = -1 - mod;
+            py = 1 + mod;
         } else if (e.direction == "bottom-right") {
-            px = 1;
-            py = 1;
+            px = 1 + mod;
+            py = 1 + mod;
         }
 
         updateText (px, py);
@@ -72,6 +74,23 @@ function touchHandler(event) {
     first.target.dispatchEvent(simulatedEvent);
     event.preventDefault();
 }
+
+
+function beginTimerModBump() {
+    intervalTimer = setInterval(function () {
+        mod += 1;
+    }, 800);
+}
+
+function endTimerModBump() {
+    clearInterval(intervalTimer);
+    mod = 1;
+}
+
+
+document.addEventListener("mousedown", beginTimerModBump, true);
+document.addEventListener("mouseup", endTimerModBump, true);
+
 
 document.addEventListener("touchstart", touchHandler, true);
 document.addEventListener("touchmove", touchHandler, true);
