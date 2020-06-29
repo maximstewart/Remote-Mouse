@@ -21,7 +21,7 @@ pyautogui.MINIMUM_DURATION = 0
 pyautogui.PAUSE = 0
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
     if request.method == 'GET':
         return render_template('index.html',
@@ -32,17 +32,45 @@ def home():
                             message='Must use GET request type...')
 
 
-@app.route('/single-click', methods=['GET', 'POST'])
-def singleClick():
+
+@app.route('/mouse-down')
+@socketio.on('mouse_down')
+def mouseDown(eve = None):
+    pyautogui.mouseDown()
+    return ""
+
+@app.route('/mouse-up')
+@socketio.on('mouse_up')
+def mouseUp(eve = None):
+    pyautogui.mouseUp()
+    return ""
+
+
+@app.route('/left-click')
+@socketio.on('left_click')
+def leftClick(eve = None):
     pyautogui.click()
     return ""
 
-@app.route('/double-click', methods=['GET', 'POST'])
-def doubleClick():
-    pyautogui.doubleClick()
+@app.route('/right-click')
+@socketio.on('right_click')
+def rightClick(eve = None):
+    pyautogui.click(button='right')
     return ""
 
-@app.route('/get-coords', methods=['GET', 'POST'])
+@app.route('/scroll-up')
+@socketio.on('scroll_up')
+def scrollUp(eve = None):
+    pyautogui.scroll(1)
+    return ""
+
+@app.route('/scroll-down')
+@socketio.on('scroll_down')
+def scrollDown(eve = None):
+    pyautogui.scroll(-1)
+    return ""
+
+@app.route('/get-coords')
 def getCoords():
     x, y = pyautogui.position();
     return '{"x": "'+ str(x) +'", "y":"' + str(y) + '"}'

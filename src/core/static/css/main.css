@@ -46,30 +46,42 @@ input {
 #canvas {
     position: relative;
     width: 98%;
-    min-height: 800px;
+    min-height: 1000px;
+    border: 1px solid #c3c3c3;
 }
 
-#singleClickBtn, #doubleClickBtn {
-    background-color: #62c462;
+#leftClickBtn, #rightClickBtn {
     border-style: dashed;
     border-width: 2px;
     overflow: auto;
-    height: 8em;
-    font-size: 200%;
-    color: black;
+    height: 5em;
+    font-size: 280%;
 }
 
-#singleClickBtn:hover,
-#doubleClickBtn:hover {
+#leftClickBtn:hover,
+#rightClickBtn:hover {
     background-color: rgba(0, 232, 255, 0.5);
     cursor: pointer;
 }
 
-#sendKeysBtn { width: 8em; }
+#scrollToggle,
+#mouseHoldToggle,
+#sendKeysBtn {
+    display: inline-block;
+    font-size: 280%;
+    width: 100%;
+}
+
+@media only screen and (min-width : 800px) {
+    body {
+    	width: 800px;
+    	margin: 0 auto;
+    }
+}
 
 
 /* Classes */
 /* Other message text colors */
-.errorTxt   { color: rgb(170, 18, 18); }
-.warningTxt { color: rgb(255, 168, 0); }
+.errorTxt   { color: rgb(170, 18, 18);  }
+.warningTxt { color: rgb(255, 168, 0);  }
 .successTxt { color: rgb(136, 204, 39); }

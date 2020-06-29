@@ -1,8 +1,13 @@
-const socket = io();
-let intervalTimer = null;
-let px       = 0;
-let py       = 0;
-let mod      = 0;
+const socket         = io();
+let mouseHoldToggle  = document.getElementById("mouseHoldToggle");
+let scrollTggl     = document.getElementById("scrollToggle");
+let clickSound     = document.getElementById("clickSound");
+let intervalTimer  = null;
+let isHoldingMouse = false;
+let isScrolling    = false;
+let mod            = 0;
+let px             = 0;
+let py             = 0;
 
 
 socket.on('connect', function() {
@@ -39,7 +44,17 @@ $(function () {
             py = 1 + mod;
         }
 
-        updateText (px, py);
+        if (isScrolling) {
+            if (e.direction == "up") {
+                socket.emit('scroll_up', "");
+            } else {
+                socket.emit('scroll_down', "");
+            }
+        } else {
+            socket.emit('update_coords', px + "," + py);
+            // doAjax("/update-coords/xy/" + px + "/" + py, "" , "update-coords", "GET");
+            updateText (px, py);
+        }
     });
 });
 
@@ -48,8 +63,6 @@ $(function () {
 function updateText (px, py) {
     const coordsTxt = "X coords: " + px + ", Y coords: " + py;
     document.getElementById("cordsText").innerText = coordsTxt;
-    // doAjax("/update-coords/xy/" + px + "/" + py, "" , "update-coords", "GET");
-    socket.emit('update_coords', px + "," + py);
 }
 
 // Touch events converted to mouse events
@@ -87,12 +100,51 @@ function endTimerModBump() {
     mod = 0;
 }
 
-function singleClick() {
-    socket.emit('single_click', "");
+function leftClick() {
+    playClickSound();
+    socket.emit('left_click', "");
 }
 
-function doubleClick() {
-    socket.emit('double_click', "");
+function rightClick() {
+    playClickSound();
+    socket.emit('right_click', "");
+}
+
+function scrollToggle() {
+    if (isScrolling) {
+        isScrolling = false;
+        scrollTggl.classList.add("btn-success");
+        scrollTggl.classList.remove("btn-info");
+        scrollTggl.innerText = "Scroll Mode: Inactive";
+    } else {
+        isScrolling = true;
+        scrollTggl.classList.add("btn-info");
+        scrollTggl.classList.remove("btn-success");
+        scrollTggl.innerText = "Scroll Mode: Active";
+    }
+}
+
+
+function scrollToggle() {
+    if (isHoldingMouse) {
+        isHoldingMouse = false;
+        mouseHoldToggle.classList.add("btn-success");
+        mouseHoldToggle.classList.remove("btn-info");
+        mouseHoldToggle.innerText = "Mouse Hold: Inactive";
+        socket.emit('mouse_up', "");
+    } else {
+        isHoldingMouse = true;
+        mouseHoldToggle.classList.add("btn-info");
+        mouseHoldToggle.classList.remove("btn-success");
+        mouseHoldToggle.innerText = "Mouse Hold: Active";
+        socket.emit('mouse_down', "");
+    }
+}
+
+function playClickSound() {
+    clickSound.pause();
+    clickSound.currentTime = 0;
+    clickSound.play();
 }
 
 
@@ -102,5 +154,9 @@ document.addEventListener("touchstart", touchHandler, true);
 document.addEventListener("touchmove", touchHandler, true);
 document.addEventListener("touchend", touchHandler, true);
 document.addEventListener("touchcancel", touchHandler, true);
-document.getElementById("singleClickBtn").addEventListener("mouseup", singleClick, true);
-document.getElementById("doubleClickBtn").addEventListener("mouseup", doubleClick, true);
+
+document.getElementById("leftClickBtn").addEventListener("mouseup", leftClick, true);
+document.getElementById("rightClickBtn").addEventListener("mouseup", rightClick, true);
+
+document.getElementById("scrollToggle").addEventListener("mouseup", scrollToggle, true);
+document.getElementById("mouseHoldToggle").addEventListener("mouseup", mouseHoldToggle, true);
