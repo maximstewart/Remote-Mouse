@@ -2,7 +2,7 @@ const socket = io();
 let intervalTimer = null;
 let px       = 0;
 let py       = 0;
-let mod      = 1;
+let mod      = 0;
 
 
 socket.on('connect', function() {
@@ -78,21 +78,29 @@ function touchHandler(event) {
 
 function beginTimerModBump() {
     intervalTimer = setInterval(function () {
-        mod += 1;
-    }, 800);
+        mod += 2;
+    }, 600);
 }
 
 function endTimerModBump() {
     clearInterval(intervalTimer);
-    mod = 1;
+    mod = 0;
+}
+
+function singleClick() {
+    socket.emit('single_click', "");
+}
+
+function doubleClick() {
+    socket.emit('double_click', "");
 }
 
 
 document.addEventListener("mousedown", beginTimerModBump, true);
 document.addEventListener("mouseup", endTimerModBump, true);
-
-
 document.addEventListener("touchstart", touchHandler, true);
 document.addEventListener("touchmove", touchHandler, true);
 document.addEventListener("touchend", touchHandler, true);
 document.addEventListener("touchcancel", touchHandler, true);
+document.getElementById("singleClickBtn").addEventListener("mouseup", singleClick, true);
+document.getElementById("doubleClickBtn").addEventListener("mouseup", doubleClick, true);

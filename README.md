@@ -37,5 +37,4 @@ Windows
 ![1 Interface.... ](images/pic1.png)
 
 # TODO
-* Fix typing input
-* Fix clicking lockup issues during touch
+8 n/a
