@@ -6,8 +6,9 @@
 
 
 function main() {
-    source "../venv/bin/activate"
+    source "/home/abaddon/Portable_Apps/py-venvs/remotemouse-venv/bin/activate"
     # Note can replace 127.0.0.1 with 0.0.0.0 to make it 'network/internet' accessable...
-    gunicorn wsgi:app -b 127.0.0.1:8088 # <module>:<app>   IE <file>:<flask app variable>
+    # Note: NEED -k eventlet for this to work! I spent too many hours on this...
+    gunicorn wsgi:app -b 127.0.0.1:8088 -k eventlet # <module>:<app>   IE <file>:<flask app variable>
 }
 main $@;

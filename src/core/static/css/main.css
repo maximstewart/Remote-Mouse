@@ -43,12 +43,6 @@ input {
     z-index: -999;
 }
 
-#canvas {
-    width: 100%;
-    min-height: 65em;
-    background-color: rgba(56, 56, 56, 0.67);
-}
-
 #singleClickBtn, #doubleClickBtn {
     background-color: #62c462;
     border-style: dashed;
@@ -60,9 +54,7 @@ input {
 }
 
 #singleClickBtn:hover,
-#doubleClickBtn:hover,
-#singleClickBtn:active,
-#doubleClickBtn:active {
+#doubleClickBtn:hover {
     background-color: rgba(0, 232, 255, 0.5);
     cursor: pointer;
 }

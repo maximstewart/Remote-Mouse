@@ -1,6 +1,6 @@
-const doAjax = (actionPath, data, action) => {
+const doAjax = async (actionPath, data, action, postType = "POST") => {
     let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", actionPath, true);
+    xhttp.open(postType, actionPath, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     // Force return to be JSON NOTE: Use application/xml to force XML
     xhttp.overrideMimeType('application/json');

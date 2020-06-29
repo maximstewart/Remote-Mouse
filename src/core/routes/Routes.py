@@ -52,11 +52,25 @@ def getCoords():
 def updateCoords(message):
     try:
         parts = message.split(",")
-        x = float( parts[0] )
-        y = float( parts[1] )
+        x     = float( parts[0] )
+        y     = float( parts[1] )
+        # print(str(x) + "," + str(y))
         pyautogui.moveRel(x, y);
     except Exception as e:
         print( repr(e) )
+
+@app.route('/update-coords/xy/<x>/<y>')
+def updateCoords2(x, y):
+    try:
+        # print(x + "," + y)
+        pyautogui.moveRel(float(x), float(y));
+        return "{}"
+    except Exception as e:
+        print( repr(e) )
+        return render_template('error.html',
+                                title='Error!',
+                                message='Key is not a valid input...')
+
 
 @app.route('/send-key', methods=['GET', 'POST'])
 def sendKey():
