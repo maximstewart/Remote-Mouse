@@ -65,6 +65,12 @@ $(function () {
 
 // Touch events converted to mouse events
 function touchHandler(event) {
+    if (event.type == "touchstart" && event.touches.length > 1) {
+        isClicking = false;
+        rightClick();
+        return ;
+    }
+
     let touches = event.changedTouches,
         first = touches[0],
         type = "";

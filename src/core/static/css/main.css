@@ -51,6 +51,7 @@ input {
 }
 
 #rightClickBtn {
+    display: none; /* Hide button unless screen bigger than media query says it is */
     border-style: dashed;
     border-width: 2px;
     overflow: auto;
@@ -71,16 +72,21 @@ input {
 }
 
 
-@media only screen and (min-width : 800px) {
+@media only screen and (max-device-width: 800px) {
     #sendKeysField {
         font-size: 300% !important;
     }
 }
 
-@media only screen and (min-width : 800px) {
+/* nothing with screen size smaller than 8000px */
+@media only screen and (min-device-width: 801px) {
     body {
     	width: 800px;
     	margin: 0 auto;
+    }
+
+    #rightClickBtn {
+        display: inline-block;
     }
 }
 
