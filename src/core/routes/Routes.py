@@ -43,14 +43,12 @@ def updateCoords2(x, y):
                                 message='Key is not a valid input...')
 
 
-@app.route('/send-key', methods=['GET', 'POST'])
-def sendKey():
-    pyautogui.doubleClick()
+@app.route('/send-keys', methods=['GET', 'POST'])
+def sendKeys():
     if request.method == 'POST':
         try:
             text = str(request.values['text']).strip()
             pyautogui.typewrite(text);
-
             # print("\nX: {}  Y: {}".format(str(x), str(y)))
             # pyautogui.typewrite('Hello world!\n', interval=secs_between_keys)  # useful for entering text, newline is Enter
             # pyautogui.press(['left', 'left', 'left', 'left']) # Press the left arrow key 4 times.

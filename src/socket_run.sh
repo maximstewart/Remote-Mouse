@@ -10,7 +10,6 @@ function main() {
     cd "${SCRIPTPATH}"
     echo "Working Dir: " $(pwd)
     mkdir /tmp/apps
-    /home/abaddon/Portable_Apps/py-venvs/remotemouse-venv/bin/gunicorn \
-        --bind unix:/tmp/apps/remoteconn.sock wsgi:app
+    ../venv/bin/gunicorn --bind unix:/tmp/apps/remoteconn.sock wsgi:app
 }
 main $@;

@@ -114,6 +114,15 @@ function rightClick() {
     socket.emit('right_click', "");
 }
 
+function sendKeys() {
+    const text = document.getElementById("sendKeysField").value.trim();
+    doAjax("/send-keys", "text=" + text, "send-keys");
+}
+
+function pressEnter() {
+    socket.emit('press_enter', "");
+}
+
 function scrollToggle() {
     if (isScrolling) {
         isScrolling = false;
@@ -160,6 +169,8 @@ document.addEventListener("touchend", touchHandler, true);
 document.addEventListener("touchcancel", touchHandler, true);
 
 document.getElementById("rightClickBtn").addEventListener("mouseup", rightClick, true);
+document.getElementById("sendKeysBtn").addEventListener("mouseup", sendKeys, true);
+document.getElementById("pressEnterBtn").addEventListener("mouseup", pressEnter, true);
 
 document.getElementById("scrollToggle").addEventListener("mouseup", scrollToggle, true);
 document.getElementById("mouseHoldToggle").addEventListener("mouseup", holdToggle, true);

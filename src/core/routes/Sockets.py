@@ -57,6 +57,12 @@ def scrollDown(eve = None):
     pyautogui.scroll(-1)
     return ""
 
+@app.route('/press-enter')
+@socketio.on('press_enter')
+def pressEnter(eve = None):
+    pyautogui.press("enter")
+    return ""
+
 
 @socketio.on('update_coords')
 def updateCoords(message):
