@@ -1,4 +1,4 @@
-# Dropper
+#  Remote-Mouse
 Remote Mouse is a flask + pyautogui app to control a PC from your phone or any other device.
 
 # Notes

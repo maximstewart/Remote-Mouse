@@ -8,11 +8,15 @@
 <audio id="clickSound" src="{{url_for('static', filename='click.mp3')}}"></audio>
 <div class="container-auto">
     <div class="row">
-        <div id="leftClickBtn" class="col justify-content-center text-center btn btn-success">
-            Left-Click
+        <div class="col justify-content-center text-center">
+            <input type="text" id="sendKeysField" class="form-control"
+                value="" placeholder="Send keys..." />
         </div>
-        <div id="rightClickBtn" class="col justify-content-center text-center btn btn-success">
-            Right-Click
+    </div>
+    <br/><br/>
+    <div class="row">
+        <div class="col justify-content-center text-center">
+            <button id="sendKeysBtn" class="btn btn-success btn-lg">Send</button>
         </div>
     </div>
     <br/><br/>
@@ -27,22 +31,14 @@
 </div>
 <br/><br/>
 <div class="row">
-    <div class="col justify-content-center text-center">
-        <input type="text" id="sendKeysField" class="form-control" style="font-size: 145%;" value="" placeholder="Send keys...">
-    </div>
-    <div class="col justify-content-center text-center">
-        <button id="sendKeysBtn" class="btn btn-success btn-lg">Send</button>
+    <div id="rightClickBtn" class="col justify-content-center text-center btn btn-success">
+        Right-Click
     </div>
 </div>
 <br/><br/>
 <div class="container-auto">
     <div class="row">
-        <div class="col justify-content-center text-center">
-            <div id="cordsText" style="font-size: 280%;">
-                X coords: 0, Y coords: 0
-            </div>
-
-            <canvas id="canvas"></canvas>
+        <div id="canvas" class="col justify-content-center text-center">
         </div>
     </div>
 </div>

@@ -2,9 +2,11 @@ const socket         = io();
 let mouseHoldToggle  = document.getElementById("mouseHoldToggle");
 let scrollTggl     = document.getElementById("scrollToggle");
 let clickSound     = document.getElementById("clickSound");
-let intervalTimer  = null;
 let isHoldingMouse = false;
 let isScrolling    = false;
+let isClicking     = true;
+let step           = 1;
+let stepBump       = 0.1;
 let mod            = 0;
 let px             = 0;
 let py             = 0;
@@ -18,31 +20,34 @@ socket.on('connect', function() {
 $(function () {
     $.mousedirection();
     $("#canvas").on("mousedirection", function (e) {
+        isClicking = false;
         if (e.direction == "up") {
             px = 0;
-            py = -1 - mod;
+            py = -step - mod;
         } else if (e.direction == "down") {
             px = 0;
-            py = 1 + mod;
+            py = step + mod;
         } else if (e.direction == "left") {
-            px = -1 - mod;
+            px = -step - mod;
             py = 0;
         } else if (e.direction == "right") {
-            px = 1 + mod;
+            px = step + mod;
             py = 0;
         } else if (e.direction == "top-left") {
-            px = -1 - mod;
-            py = -1 - mod;
+            px = -step - mod;
+            py = -step - mod;
         } else if (e.direction == "top-right") {
-            px = 1 + mod;
-            py = -1 - mod;
+            px = step + mod;
+            py = -step - mod;
         } else if (e.direction == "bottom-left") {
-            px = -1 - mod;
-            py = 1 + mod;
+            px = -step - mod;
+            py = step + mod;
         } else if (e.direction == "bottom-right") {
-            px = 1 + mod;
-            py = 1 + mod;
+            px = step + mod;
+            py = step + mod;
         }
+
+        mod += stepBump;
 
         if (isScrolling) {
             if (e.direction == "up") {
@@ -53,17 +58,10 @@ $(function () {
         } else {
             socket.emit('update_coords', px + "," + py);
             // doAjax("/update-coords/xy/" + px + "/" + py, "" , "update-coords", "GET");
-            updateText (px, py);
         }
     });
 });
 
-
-
-function updateText (px, py) {
-    const coordsTxt = "X coords: " + px + ", Y coords: " + py;
-    document.getElementById("cordsText").innerText = coordsTxt;
-}
 
 // Touch events converted to mouse events
 function touchHandler(event) {
@@ -89,15 +87,15 @@ function touchHandler(event) {
 }
 
 
-function beginTimerModBump() {
-    intervalTimer = setInterval(function () {
-        mod += 2;
-    }, 600);
+function setClickkCheck() {
+    isClicking = true;
 }
 
-function endTimerModBump() {
-    clearInterval(intervalTimer);
+function resetClickCheckAndModBump(e) {
     mod = 0;
+    if (e.target.id == "canvas" && isClicking) {
+        leftClick();
+    }
 }
 
 function leftClick() {
@@ -148,14 +146,13 @@ function playClickSound() {
 }
 
 
-document.addEventListener("mousedown", beginTimerModBump, true);
-document.addEventListener("mouseup", endTimerModBump, true);
+document.addEventListener("mousedown", setClickkCheck, true);
+document.addEventListener("mouseup", resetClickCheckAndModBump, true);
 document.addEventListener("touchstart", touchHandler, true);
 document.addEventListener("touchmove", touchHandler, true);
 document.addEventListener("touchend", touchHandler, true);
 document.addEventListener("touchcancel", touchHandler, true);
 
-document.getElementById("leftClickBtn").addEventListener("mouseup", leftClick, true);
 document.getElementById("rightClickBtn").addEventListener("mouseup", rightClick, true);
 
 document.getElementById("scrollToggle").addEventListener("mouseup", scrollToggle, true);
