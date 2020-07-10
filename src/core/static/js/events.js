@@ -1,15 +1,16 @@
 const socket         = io();
 let mouseHoldToggle  = document.getElementById("mouseHoldToggle");
-let scrollTggl     = document.getElementById("scrollToggle");
-let clickSound     = document.getElementById("clickSound");
-let isHoldingMouse = false;
-let isScrolling    = false;
-let isClicking     = true;
-let step           = 1;
-let stepBump       = 0.1;
-let mod            = 0;
-let px             = 0;
-let py             = 0;
+let scrollTggl       = document.getElementById("scrollToggle");
+let clickSound       = document.getElementById("clickSound");
+let isHoldingMouse   = false;
+let isScrolling      = false;
+let isRightClicking  = false;
+let isClicking       = true;
+let step             = 1;
+let stepBump         = 0.1;
+let mod              = 0;
+let px               = 0;
+let py               = 0;
 
 
 socket.on('connect', function() {
@@ -20,7 +21,9 @@ socket.on('connect', function() {
 $(function () {
     $.mousedirection();
     $("#canvas").on("mousedirection", function (e) {
-        isClicking = false;
+        isClicking       = false;
+        isRightClicking  = false;
+
         if (e.direction == "up") {
             px = 0;
             py = -step - mod;
@@ -52,7 +55,7 @@ $(function () {
         if (isScrolling) {
             if (e.direction == "up") {
                 socket.emit('scroll_up', "");
-            } else {
+            } else if (e.direction == "down") {
                 socket.emit('scroll_down', "");
             }
         } else {
@@ -66,7 +69,12 @@ $(function () {
 // Touch events converted to mouse events
 function touchHandler(event) {
     if (event.type == "touchstart" && event.touches.length > 1) {
-        isClicking = false;
+        isClicking      = false;
+        isRightClicking = true;
+    }
+
+    if (event.type == "touchend" && isRightClicking) {
+        isRightClicking = false;
         rightClick();
         return ;
     }
