@@ -19,7 +19,7 @@ Linux/Mac
 ``` source bin/activate ```
 
 Windows
-``` source bin/Scripts/activate ```
+``` source venv/bin/Scripts/activate ```
 
 Linux/Mac
 ``` pip install -r linux-requirements.txt ```
