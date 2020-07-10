@@ -51,7 +51,6 @@ input {
 }
 
 #rightClickBtn {
-    display: none; /* Hide button unless screen bigger than media query says it is */
     border-style: dashed;
     border-width: 2px;
     overflow: auto;
@@ -72,6 +71,10 @@ input {
     width: 100%;
 }
 
+#scrollToggleContainer,
+#rightClickBtn {
+    display: none; /* Hide button unless screen bigger than media query says it is */
+}
 
 @media only screen and (max-device-width: 800px) {
     #sendKeysField {
@@ -86,8 +89,9 @@ input {
     	margin: 0 auto;
     }
 
+    #scrollToggleContainer,
     #rightClickBtn {
-        display: inline-block;
+        display: block;
     }
 }
 

@@ -3,6 +3,7 @@ let mouseHoldToggle  = document.getElementById("mouseHoldToggle");
 let scrollTggl       = document.getElementById("scrollToggle");
 let clickSound       = document.getElementById("clickSound");
 let isHoldingMouse   = false;
+let isTwoFinger      = false;
 let isScrolling      = false;
 let isRightClicking  = false;
 let isClicking       = true;
@@ -21,8 +22,7 @@ socket.on('connect', function() {
 $(function () {
     $.mousedirection();
     $("#canvas").on("mousedirection", function (e) {
-        isClicking       = false;
-        isRightClicking  = false;
+        isClicking = false;
 
         if (e.direction == "up") {
             px = 0;
@@ -71,12 +71,23 @@ function touchHandler(event) {
     if (event.type == "touchstart" && event.touches.length > 1) {
         isClicking      = false;
         isRightClicking = true;
+        isTwoFinger     = true;
     }
 
-    if (event.type == "touchend" && isRightClicking) {
+    if (event.type == "touchmove" && isTwoFinger) {
+        isClicking      = false;
         isRightClicking = false;
-        rightClick();
-        return ;
+        isScrolling     = true;
+    }
+
+    if (event.type == "touchend") {
+        isTwoFinger = false;
+        isScrolling = false;
+        if (isRightClicking) {
+            isRightClicking = false;
+            rightClick();
+            return ;
+        }
     }
 
     let touches = event.changedTouches,
