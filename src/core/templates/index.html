@@ -5,44 +5,98 @@
 {% endblock body_header_additional %}
 
 {% block body_content %}
+<!-- Typing Modal -->
+<div class="modal fade" id="typingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Typing</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" id="sendKeysField" class="form-control"
+                                value="" placeholder="Send keys..." />
+                                <ul class="navbar-nav justify-content-center text-center">
+                                    <li class="list-group-item" style="width: 100%;">
+                                        <button id="sendKeysBtn" class="btn btn-success btn-lg">Send</button>
+                                    </li>
+                                    <li class="list-group-item" style="width: 100%;">
+                                        <button id="pressEnterBtn" class="btn btn-success btn-lg">Enter</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="closeTypingModalBtn" type="button" data-dismiss="modal" class="btn btn-danger btn-lg">Close</button>
+            </div>
+
+            <div id="bg-alert-zone" class="col">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Controls Modal -->
+<div class="modal fade" id="controlsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Controls</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col">
+                        <ul class="navbar-nav">
+                            <li id="hideHandler" class="list-group-item">
+                                <button id="scrollToggle" class="btn btn-success btn-lg">Scroll Mode: Inactive</button>
+                            </li>
+                            <li class="list-group-item">
+                                <button id="mouseHoldToggle" class="btn btn-success btn-lg">Mouse Hold: Inactive</button>
+                            </li>
+                            <li id="hideHandler" class="list-group-item">
+                                <button id="rightClickBtn" class="btn btn-success btn-lg">
+                                    Right-Click
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="closeControlsModalBtn" type="button" data-dismiss="modal" class="btn btn-danger btn-lg">Close</button>
+            </div>
+
+            <div id="bg-alert-zone" class="col">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <audio id="clickSound" src="{{url_for('static', filename='click.mp3')}}"></audio>
-<div class="container-auto">
-    <div class="row">
-        <div class="col justify-content-center text-center">
-            <input type="text" id="sendKeysField" class="form-control"
-                value="" placeholder="Send keys..." />
-        </div>
-    </div>
-    <br/><br/>
-    <div class="row">
-        <div class="col">
-            <div class="col justify-content-center text-center">
-                <button id="sendKeysBtn" class="btn btn-success btn-lg">Send</button>
-            </div>
-        </div>
-        <div class="col">
-            <div class="col justify-content-center text-center">
-                <button id="pressEnterBtn" class="btn btn-success btn-lg">Enter</button>
-            </div>
-        </div>
-    </div>
-    <br/><br/>
-    <div class="row">
-        <div id="scrollToggleContainer" class="col justify-content-center text-center">
-            <button id="scrollToggle" class="btn btn-success btn-lg">Scroll Mode: Inactive</button>
-        </div>
-        <div class="col justify-content-center text-center">
-            <button id="mouseHoldToggle" class="btn btn-success btn-lg">Mouse Hold: Inactive</button>
-        </div>
-    </div>
-</div>
-<br/><br/>
-<div class="row">
-    <div id="rightClickBtn" class="col justify-content-center text-center btn btn-success">
-        Right-Click
-    </div>
-</div>
-<br/><br/>
 <div class="container-auto">
     <div class="row">
         <div id="canvas" class="col justify-content-center text-center">

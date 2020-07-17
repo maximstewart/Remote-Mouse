@@ -180,6 +180,25 @@ function playClickSound() {
 }
 
 
+$( "#controlsModalBtn" ).bind( "mouseup", async function(eve) {
+    $('#controlsModal').modal({"focus": true, "show": true});
+});
+
+$( "#typingModalBtn" ).bind( "mouseup", async function(eve) {
+    $('#typingModal').modal({"focus": true, "show": true});
+});
+
+$( "#closeControlsModalBtn" ).bind( "mouseup", async function(eve) {
+    console.log("here");
+    $('#controlsModal').modal({"focus": false, "show": false});
+});
+
+$( "#closeTypingModalBtn" ).bind( "mouseup", async function(eve) {
+    console.log("here2");
+    $('#typingModal').modal({"focus": false, "show": false});
+});
+
+
 document.addEventListener("mousedown", setClickkCheck, true);
 document.addEventListener("mouseup", resetClickCheckAndModBump, true);
 document.addEventListener("touchstart", touchHandler, true);

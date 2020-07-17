@@ -40,6 +40,8 @@
     <!-- <img id="bg" src="{{ url_for('static', filename='imgs/backgrounds/background.jpg')}}" alt="{{title}} Background Logo" /> -->
 
 {% block body_header %}
+    {% include "body-header.html" %}
+
     {% block body_header_additional %}
     {% endblock body_header_additional%}
 {% endblock %}
