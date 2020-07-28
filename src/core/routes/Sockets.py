@@ -63,6 +63,12 @@ def pressEnter(eve = None):
     pyautogui.press("enter")
     return ""
 
+@app.route('/press-back')
+@socketio.on('press_back')
+def pressBack(eve = None):
+    pyautogui.press("backspace")
+    return ""
+
 
 @socketio.on('update_coords')
 def updateCoords(message):

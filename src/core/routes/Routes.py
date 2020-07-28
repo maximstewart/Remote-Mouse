@@ -1,4 +1,5 @@
 # Python imports
+import subprocess
 
 # Lib imports
 import pyautogui
@@ -28,6 +29,26 @@ def home():
     return render_template('error.html',
                             title='Error!',
                             message='Must use GET request type...')
+
+
+@app.route('/sound-manager')
+def soundManager():
+    if request.method == 'GET':
+        # command = 'runuser -l abaddon bash -c "pacmd list-sink-inputs"'
+        command = 'sudo -u abaddon bash -c "pacmd list-sink-inputs"'
+        # command = 'sudo -u abaddon bash <<EOF pacmd list-sink-inputs EOF'
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+        result = process.wait()
+        print(process.stdout.read())
+        _apps = []
+        return render_template('sound-manager.html',
+                                title=TITLE,
+                                apps=_apps)
+
+    return render_template('error.html',
+                            title='Error!',
+                            message='Must use GET request type...')
+
 
 
 @app.route('/update-coords/xy/<x>/<y>')

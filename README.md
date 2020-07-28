@@ -2,8 +2,8 @@
 Remote Mouse is a flask + pyautogui app to control a PC from your phone or any other device.
 
 # Fixes
-* Fixed scroll direction detection.
-* Fixed right click detection on release.
+* Added delete button.
+* Disabled touch zoom-in.
 
 # Notes
 * Need python 2+

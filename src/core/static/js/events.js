@@ -142,6 +142,11 @@ function pressEnter() {
     socket.emit('press_enter', "");
 }
 
+function pressBack() {
+    socket.emit('press_back', "");
+}
+
+
 function scrollToggle() {
     if (isScrolling) {
         isScrolling = false;
@@ -190,12 +195,12 @@ $( "#typingModalBtn" ).bind( "mouseup", async function(eve) {
 
 $( "#closeControlsModalBtn" ).bind( "mouseup", async function(eve) {
     console.log("here");
-    $('#controlsModal').modal({"focus": false, "show": false});
+    $('#controlsModal').modal('hide');
 });
 
 $( "#closeTypingModalBtn" ).bind( "mouseup", async function(eve) {
     console.log("here2");
-    $('#typingModal').modal({"focus": false, "show": false});
+    $('#typingModal').modal('hide');
 });
 
 
@@ -209,6 +214,8 @@ document.addEventListener("touchcancel", touchHandler, true);
 document.getElementById("rightClickBtn").addEventListener("mouseup", rightClick, true);
 document.getElementById("sendKeysBtn").addEventListener("mouseup", sendKeys, true);
 document.getElementById("pressEnterBtn").addEventListener("mouseup", pressEnter, true);
+document.getElementById("pressBackBtn").addEventListener("mouseup", pressBack, true);
+
 
 document.getElementById("scrollToggle").addEventListener("mouseup", scrollToggle, true);
 document.getElementById("mouseHoldToggle").addEventListener("mouseup", holdToggle, true);
