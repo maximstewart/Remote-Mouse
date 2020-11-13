@@ -1,4 +1,11 @@
-const socket         = io();
+let useSocket = true;
+
+const socket = io();
+socket.on('connect', function() {
+  console.log("Websocket connected...");
+});
+
+
 let mouseHoldToggle  = document.getElementById("mouseHoldToggle");
 let scrollTggl       = document.getElementById("scrollToggle");
 let clickSound       = document.getElementById("clickSound");
@@ -14,9 +21,6 @@ let px               = 0;
 let py               = 0;
 
 
-socket.on('connect', function() {
-    console.log("Websocket connected...");
-});
 
 
 $(function () {
@@ -53,14 +57,25 @@ $(function () {
         mod += stepBump;
 
         if (isScrolling) {
-            if (e.direction == "up") {
-                socket.emit('scroll_up', "");
-            } else if (e.direction == "down") {
-                socket.emit('scroll_down', "");
+            if (useSocket) {
+                if (e.direction == "up") {
+                  socket.emit('scroll_up', "");
+                } else if (e.direction == "down") {
+                  socket.emit('scroll_down', "");
+                }
+            } else {
+                if (e.direction == "up") {
+                  doAjax("/scroll-up" , "scroll-up", "GET");
+                } else if (e.direction == "down") {
+                  doAjax("/scroll-down" , "scroll-down", "GET");
+                }
             }
         } else {
-            socket.emit('update_coords', px + "," + py);
-            // doAjax("/update-coords/xy/" + px + "/" + py, "" , "update-coords", "GET");
+            if (useSocket) {
+                socket.emit('update_coords', px + "," + py);
+            } else {
+                doAjax("/update-coords/xy/" + px + "/" + py, "" , "update-coords", "GET");
+            }
         }
     });
 });
@@ -124,13 +139,21 @@ function resetClickCheckAndModBump(e) {
 }
 
 function leftClick() {
-    playClickSound();
-    socket.emit('left_click', "");
+    if (useSocket) {
+        playClickSound();
+        socket.emit('left_click', "");
+    } else {
+        doAjax("/left-click" , "left-click", "GET");
+    }
 }
 
 function rightClick() {
-    playClickSound();
-    socket.emit('right_click', "");
+    if (useSocket) {
+        playClickSound();
+        socket.emit('right_click', "");
+    } else {
+        doAjax("/right-click", "right-click", "GET");
+    }
 }
 
 function sendKeys() {
@@ -139,11 +162,19 @@ function sendKeys() {
 }
 
 function pressEnter() {
-    socket.emit('press_enter', "");
+    if (useSocket) {
+        socket.emit('press_enter', "");
+    } else {
+        doAjax("/press-enter", "press-enter", "GET");
+    }
 }
 
 function pressBack() {
-    socket.emit('press_back', "");
+    if (useSocket) {
+        socket.emit('press_back', "");
+    } else {
+        doAjax("/press-back", "" , "back-press", "GET");
+    }
 }
 
 
