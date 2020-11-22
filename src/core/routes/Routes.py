@@ -7,24 +7,17 @@ from flask import request, render_template
 
 
 # App imports
-from core import app, socketio                   # Get from __init__
+from core import app, pyautogui, socketio        # Get from __init__
 from core.MessageHandler import MessageHandler   # Get simple message processor
 
 
 msgHandler = MessageHandler()
-TITLE      = app.config['TITLE']
-
-pyautogui.FAILSAFE = False                       # If we hit corner, that's ok
-# Let piautogui make updates as quick as it can...
-pyautogui.MINIMUM_DURATION = 0
-pyautogui.PAUSE = 0
 
 
 @app.route('/')
 def home():
     if request.method == 'GET':
-        return render_template('index.html',
-                                title=TITLE)
+        return render_template('index.html')
 
     return render_template('error.html',
                             title='Error!',
@@ -42,7 +35,6 @@ def soundManager():
         print(process.stdout.read())
         _apps = []
         return render_template('sound-manager.html',
-                                title=TITLE,
                                 apps=_apps)
 
     return render_template('error.html',

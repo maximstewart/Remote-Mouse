@@ -4,6 +4,7 @@ from datetime import timedelta
 
 
 # Lib imports
+import pyautogui
 import eventlet
 from engineio.payload import Payload
 
@@ -23,11 +24,12 @@ from flask_socketio import SocketIO
 
 
 # Configs and 'init'
+APP_NAME      = 'RemoteMouse'
 ROOT_FILE_PTH = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__)
 app.config.update({
-                "TITLE": 'RemoteMouse',
+                "TITLE": APP_NAME,
                 'DEBUG': False,
                 'SECRET_KEY': secrets.token_hex(32),
                 'PERMANENT_SESSION_LIFETIME': timedelta(days = 7).total_seconds()
@@ -44,5 +46,11 @@ socketio = SocketIO(app, async_mode = 'eventlet',
                     engineio_logger = True,
                     logger = True)
 
+
+app.jinja_env.globals['TITLE'] =  APP_NAME
+pyautogui.FAILSAFE = False                       # If we hit corner, that's ok
+# Let piautogui make updates as quick as it can...
+pyautogui.MINIMUM_DURATION = 0
+pyautogui.PAUSE = 0
 
 from core import routes

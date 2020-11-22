@@ -6,18 +6,13 @@ from flask import request, render_template
 
 
 # App imports
-from core import app, socketio                   # Get from __init__
+from core import app, pyautogui, socketio        # Get from __init__
 from core.MessageHandler import MessageHandler   # Get simple message processor
 
 
 
 
 msgHandler = MessageHandler()
-
-pyautogui.FAILSAFE = False                       # If we hit corner, that's ok
-# Let piautogui make updates as quick as it can...
-pyautogui.MINIMUM_DURATION = 0
-pyautogui.PAUSE = 0
 
 
 @app.route('/mouse-down')
@@ -79,4 +74,4 @@ def updateCoords(message):
         # print(str(x) + "," + str(y))
         pyautogui.moveRel(x, y);
     except Exception as e:
-        print( repr(e) )
+        pass
