@@ -65,17 +65,25 @@ def pressBack(eve = None):
     return ""
 
 
-@app.route('/update-coords/xy/<message>/<message2>')
+@app.route('/update-coords/xy/<m1>/<m2>')
 @socketio.on('update_coords', namespace='/socket.io')
-def updateCoords(message = None, message2 = None):
-    try:
-        parts = message.split(",")
-        x     = float( parts[0] )
-        y     = float( parts[1] )
-        # print(str(x) + "," + str(y))
-        pyautogui.moveRel(x, y);
-        return ""
-    except Exception as e:
-        pass
+def updateCoords(m1 = None, m2 = None):
+    if not m2:
+        try:
+            parts = m1.split(",")
+            x     = float( parts[0] )
+            y     = float( parts[1] )
+            # print(str(x) + "," + str(y))
+            pyautogui.moveRel(x, y);
+        except Exception as e:
+            pass
+    else:
+        try:
+            x = float( m1 )
+            y = float( m2 )
+            # print(str(x) + "," + str(y))
+            pyautogui.moveRel(x, y);
+        except Exception as e:
+            pass
 
     return ""
