@@ -6,6 +6,7 @@ from datetime import timedelta
 # Lib imports
 import pyautogui
 import eventlet
+# import eventlet.debug
 from engineio.payload import Payload
 
 # Some fixrs for Websockets
