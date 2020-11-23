@@ -20,7 +20,7 @@ function main() {
     # Note can replace 127.0.0.1 with 0.0.0.0 to make it 'network/internet' accessable...
     # Note: NEED -k eventlet for this to work! I spent too many hours on this...
     # <module>:<app>   IE <file>:<flask app variable>
-    gunicorn wsgi:app
+    gunicorn wsgi:app \
                 -b $ADDR:$PORT \
                 -k eventlet \
                 -w $WORKER_COUNT \
